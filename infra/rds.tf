@@ -8,7 +8,9 @@ resource "aws_db_subnet_group" "main" {
 }
 
 resource "aws_db_instance" "postgres" {
-    identifier = "${local.projectName}-postgres"
+    for_each = toset(local.services)
+
+    identifier = "${local.projectName}-${each.key}-postgres"
 
     engine         = "postgres"
     engine_version = "16.11"
@@ -17,8 +19,8 @@ resource "aws_db_instance" "postgres" {
     allocated_storage = 20
     storage_type      = "gp2"
 
-    db_name  = "garage"
-    username = "postgres"
+    db_name                     = each.key
+    username                    = "postgres"
     manage_master_user_password = true
 
     vpc_security_group_ids = [aws_security_group.rds.id]
@@ -27,6 +29,6 @@ resource "aws_db_instance" "postgres" {
     skip_final_snapshot = true
 
     tags = {
-        Name = "${local.projectName}-postgres"
+        Name = "${local.projectName}-${each.key}-postgres"
     }
 }

@@ -2,19 +2,19 @@
 # DATABASE OUTPUTS
 ########################################
 
-output "rds_endpoint" {
-    description = "Endpoint do banco PostgreSQL"
-    value       = aws_db_instance.postgres.endpoint
+output "rds_endpoints" {
+    description = "Endpoints PostgreSQL por serviço"
+    value       = { for k, v in aws_db_instance.postgres : k => v.endpoint }
 }
 
-output "rds_port" {
-    description = "Porta do banco PostgreSQL"
-    value       = aws_db_instance.postgres.port
+output "rds_ports" {
+    description = "Portas PostgreSQL por serviço"
+    value       = { for k, v in aws_db_instance.postgres : k => v.port }
 }
 
-output "db_secret_arn" {
-    description = "ARN do secret contendo a senha do banco PostgreSQL"
-    value       = length(aws_db_instance.postgres.master_user_secret) > 0 ? aws_db_instance.postgres.master_user_secret[0].secret_arn : ""
+output "db_secret_arns" {
+    description = "ARNs dos secrets do master user por serviço"
+    value       = { for k, v in aws_db_instance.postgres : k => length(v.master_user_secret) > 0 ? v.master_user_secret[0].secret_arn : "" }
 }
 
 ########################################

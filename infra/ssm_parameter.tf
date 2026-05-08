@@ -1,13 +1,17 @@
 resource "aws_ssm_parameter" "db_endpoint" {
-    name      = "/garage/prod/db/endpoint"
+    for_each = aws_db_instance.postgres
+
+    name      = "/${local.projectName}/prod/${each.key}/db/endpoint"
     type      = "String"
-    value     = aws_db_instance.postgres.endpoint
+    value     = each.value.endpoint
     overwrite = true
 }
 
 resource "aws_ssm_parameter" "db_secret_arn" {
-    name      = "/garage/prod/db/secret_arn"
+    for_each = aws_db_instance.postgres
+
+    name      = "/${local.projectName}/prod/${each.key}/db/secret_arn"
     type      = "String"
-    value     = length(aws_db_instance.postgres.master_user_secret) > 0 ? aws_db_instance.postgres.master_user_secret[0].secret_arn : ""
+    value     = length(each.value.master_user_secret) > 0 ? each.value.master_user_secret[0].secret_arn : ""
     overwrite = true
 }
