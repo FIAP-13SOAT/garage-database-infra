@@ -16,7 +16,7 @@ terraform {
 locals {
     projectName = "garage"
     awsRegion   = "us-east-1"
-    services    = ["auth", "billing", "execution", "stock"]
+    services    = ["auth", "os", "billing", "stock"]
 }
 
 provider "aws" {
