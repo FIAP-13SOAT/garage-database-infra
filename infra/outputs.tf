@@ -18,20 +18,6 @@ output "db_secret_arns" {
 }
 
 ########################################
-# MONGODB OUTPUTS
-########################################
-
-output "mongo_private_ip" {
-    description = "IP privado da EC2 que hospeda o MongoDB"
-    value       = aws_instance.mongo.private_ip
-}
-
-output "mongo_app_database" {
-    description = "Database criado para o execution-service"
-    value       = local.mongo_app_database
-}
-
-########################################
 # NETWORK OUTPUTS (consumed by garage-cloud-stack)
 ########################################
 
