@@ -28,11 +28,11 @@ resource "aws_security_group" "rds" {
 }
 
 ########################################
-# SECURITY GROUP - DocumentDB (MongoDB)
+# SECURITY GROUP - MongoDB (EC2-hosted)
 ########################################
 
-resource "aws_security_group" "docdb" {
-    name_prefix = "${local.projectName}-docdb-sg"
+resource "aws_security_group" "mongo" {
+    name_prefix = "${local.projectName}-mongo-sg"
     vpc_id      = aws_vpc.main.id
 
     ingress {
@@ -40,7 +40,7 @@ resource "aws_security_group" "docdb" {
         to_port     = 27017
         protocol    = "tcp"
         cidr_blocks = [aws_vpc.main.cidr_block]
-        description = "Allow MongoDB access from within VPC"
+        description = "MongoDB wire protocol from within VPC (EKS pods)"
     }
 
     egress {
@@ -51,6 +51,6 @@ resource "aws_security_group" "docdb" {
     }
 
     tags = {
-        Name = "${local.projectName}-docdb-security-group"
+        Name = "${local.projectName}-mongo-security-group"
     }
 }

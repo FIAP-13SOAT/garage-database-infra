@@ -18,17 +18,17 @@ output "db_secret_arns" {
 }
 
 ########################################
-# DOCUMENTDB OUTPUTS
+# MONGODB OUTPUTS
 ########################################
 
-output "docdb_endpoint" {
-    description = "Endpoint DocumentDB (MongoDB-compatible) para o execution-service"
-    value       = aws_docdb_cluster.execution.endpoint
+output "mongo_private_ip" {
+    description = "IP privado da EC2 que hospeda o MongoDB"
+    value       = aws_instance.mongo.private_ip
 }
 
-output "docdb_secret_arn" {
-    description = "ARN do secret do master user do DocumentDB"
-    value       = length(aws_docdb_cluster.execution.master_user_secret) > 0 ? aws_docdb_cluster.execution.master_user_secret[0].secret_arn : ""
+output "mongo_app_database" {
+    description = "Database criado para o execution-service"
+    value       = local.mongo_app_database
 }
 
 ########################################
