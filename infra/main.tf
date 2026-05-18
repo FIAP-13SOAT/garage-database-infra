@@ -4,10 +4,14 @@ terraform {
             source  = "hashicorp/aws"
             version = "6.17.0"
         }
+        random = {
+            source  = "hashicorp/random"
+            version = "~> 3.6"
+        }
     }
 
     backend "s3" {
-        bucket = "garage-terraform-state-211125475874"
+        bucket = "garage-terraform-state-500431122450"
         key    = "database/terraform.tfstate"
         region = "us-east-1"
     }
