@@ -7,7 +7,7 @@ terraform {
     }
 
     backend "s3" {
-        bucket = "garage-terraform-state-211125475874"
+        # bucket passado via: terraform init -backend-config="bucket=garage-terraform-state-<ACCOUNT_ID>"
         key    = "database/terraform.tfstate"
         region = "us-east-1"
     }
@@ -16,7 +16,7 @@ terraform {
 locals {
     projectName = "garage"
     awsRegion   = "us-east-1"
-    services    = ["auth", "billing", "execution", "stock"]
+    services    = ["auth", "billing", "os", "stock"]
 }
 
 provider "aws" {
