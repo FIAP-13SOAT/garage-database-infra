@@ -11,7 +11,7 @@ terraform {
     }
 
     backend "s3" {
-        bucket = "garage-terraform-state-500431122450"
+        # bucket passado via: terraform init -backend-config="bucket=garage-terraform-state-<ACCOUNT_ID>"
         key    = "database/terraform.tfstate"
         region = "us-east-1"
     }
