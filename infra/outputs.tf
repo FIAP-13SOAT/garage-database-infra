@@ -17,19 +17,6 @@ output "db_secret_arns" {
     value       = { for k, v in aws_db_instance.postgres : k => length(v.master_user_secret) > 0 ? v.master_user_secret[0].secret_arn : "" }
 }
 
-########################################
-# DOCUMENTDB OUTPUTS
-########################################
-
-output "docdb_endpoint" {
-    description = "Endpoint DocumentDB (MongoDB-compatible) para o execution-service"
-    value       = aws_docdb_cluster.execution.endpoint
-}
-
-output "docdb_secret_arn" {
-    description = "ARN do secret do master user do DocumentDB"
-    value       = length(aws_docdb_cluster.execution.master_user_secret) > 0 ? aws_docdb_cluster.execution.master_user_secret[0].secret_arn : ""
-}
 
 ########################################
 # NETWORK OUTPUTS (consumed by garage-cloud-stack)
