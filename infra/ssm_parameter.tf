@@ -19,21 +19,3 @@ resource "aws_ssm_parameter" "db_secret_arn" {
     value     = length(each.value.master_user_secret) > 0 ? each.value.master_user_secret[0].secret_arn : ""
     overwrite = true
 }
-
-########################################
-# SSM — DocumentDB (MongoDB)
-########################################
-
-resource "aws_ssm_parameter" "docdb_endpoint" {
-    name      = "/${local.projectName}/prod/execution/docdb/endpoint"
-    type      = "String"
-    value     = aws_docdb_cluster.execution.endpoint
-    overwrite = true
-}
-
-resource "aws_ssm_parameter" "docdb_secret_arn" {
-    name      = "/${local.projectName}/prod/execution/docdb/secret_arn"
-    type      = "String"
-    value     = length(aws_docdb_cluster.execution.master_user_secret) > 0 ? aws_docdb_cluster.execution.master_user_secret[0].secret_arn : ""
-    overwrite = true
-}
